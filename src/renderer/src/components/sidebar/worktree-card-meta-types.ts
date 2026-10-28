@@ -25,7 +25,7 @@ export type WorktreeCardLinearIssueDisplay = {
   url?: string
   stateName?: string
   stateType?: string
-  labels?: string[]
+  labels?: { name: string; color?: string }[]
 }
 
 export type WorktreeCardJiraIssueDisplay = {

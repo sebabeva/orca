@@ -9,7 +9,11 @@ import {
 import { getWorkspaceAttachmentSourceLabel } from './workspace-attachment-source-label'
 import { WorktreeCardDetailSection } from './WorktreeCardDetailSection'
 import { DetailHeader } from './WorktreeCardMetadataControls'
-import { IssueStateBadge, LinearStateBadge } from './WorktreeCardMetadataStatusBadges'
+import {
+  IssueStateBadge,
+  LinearLabelBadge,
+  LinearStateBadge
+} from './WorktreeCardMetadataStatusBadges'
 import { WorkspaceAttachmentOrigins } from './WorkspaceAttachmentOrigins'
 import { WorktreeCardReferenceRow } from './WorktreeCardReferenceRow'
 import type { WorkspaceReferenceDetailsMap } from './workspace-reference-details'
@@ -93,9 +97,11 @@ export function WorktreeCardLinkedItemsSection({
                 onAddReference={onManage}
               />
               <div className="divide-y divide-border">
-                {group.rows.map(({ item, key, url, detail, live }) => {
+                {group.rows.map(({ item, key, url, detail, live, liveTask }) => {
                   const label = workspaceAttachmentLabel(item)
                   const source = getWorkspaceAttachmentSourceLabel(item)
+                  const linearLabels =
+                    liveTask && 'identifier' in liveTask ? (liveTask.labels ?? []) : []
                   return (
                     <div
                       key={key}
@@ -124,7 +130,8 @@ export function WorktreeCardLinkedItemsSection({
                       />
                       {(live && 'baseRefName' in live && live.baseRefName) ||
                       detail?.stateName ||
-                      detail?.issueState ? (
+                      detail?.issueState ||
+                      linearLabels.length > 0 ? (
                         <div className="flex flex-wrap items-center gap-1 pl-5">
                           {live && 'baseRefName' in live && live.baseRefName ? (
                             <span className="text-2xs text-muted-foreground">
@@ -142,6 +149,13 @@ export function WorktreeCardLinkedItemsSection({
                           {detail?.issueState ? (
                             <IssueStateBadge state={detail.issueState} />
                           ) : null}
+                          {linearLabels.map((linearLabel) => (
+                            <LinearLabelBadge
+                              key={linearLabel.name}
+                              name={linearLabel.name}
+                              color={linearLabel.color}
+                            />
+                          ))}
                         </div>
                       ) : null}
                     </div>
