@@ -173,6 +173,27 @@ describe('workspace linked references in hover details', () => {
     expect(taskRow?.textContent).toContain('a11y')
     expect(taskRow?.innerHTML).toContain('background-color: #eb5757')
   })
+  it('shows labels for a linked Linear task that is not the card’s own issue', () => {
+    const task = attachments[2]
+    const { container } = render(
+      <Fixture
+        onManage={vi.fn()}
+        referenceDetails={{
+          [getWorkspaceAttachmentKey(task)]: {
+            title: 'Keyboard accessibility',
+            url: task.url ?? '',
+            labels: [{ name: 'Design', color: '#f2c94c' }]
+          }
+        }}
+      />
+    )
+    const taskRow = Array.from(container.querySelectorAll('[data-workspace-hover-reference]')).find(
+      (node) =>
+        node.getAttribute('data-workspace-hover-reference') === getWorkspaceAttachmentKey(task)
+    )
+    expect(taskRow?.textContent).toContain('Design')
+    expect(taskRow?.innerHTML).toContain('background-color: #f2c94c')
+  })
   it('shows grouped peers and only each review’s own known checks', () => {
     const { container } = render(<Fixture onManage={vi.fn()} />)
     expect(screen.getByText('Reviews · 2')).toBeTruthy()

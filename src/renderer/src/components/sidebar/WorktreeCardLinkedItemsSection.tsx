@@ -101,7 +101,9 @@ export function WorktreeCardLinkedItemsSection({
                   const label = workspaceAttachmentLabel(item)
                   const source = getWorkspaceAttachmentSourceLabel(item)
                   const linearLabels =
-                    liveTask && 'identifier' in liveTask ? (liveTask.labels ?? []) : []
+                    detail?.labels ??
+                    (liveTask && 'identifier' in liveTask ? liveTask.labels : undefined) ??
+                    []
                   return (
                     <div
                       key={key}

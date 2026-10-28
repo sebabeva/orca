@@ -5,6 +5,7 @@ import { getRepoExecutionHostId } from '../../../../shared/execution-host'
 import { getTaskSourceCacheScope } from '../../../../shared/task-source-context'
 import { canReadWorkspaceReferenceReview } from './workspace-reference-review-source'
 import { isWorkspaceRepositoryAttachment } from './worktree-attachment-editing'
+import { getLinearIssueDisplayLabels } from './linear-issue-display-labels'
 import {
   matchesWorkspaceReferenceUrl,
   getWorkspaceReferenceLinearWorkspaceId,
@@ -78,7 +79,8 @@ export function getWorkspaceReferenceLookup(request: WorkspaceReferenceRequest, 
               title: issue.title,
               url: issue.url,
               stateName: issue.state.name,
-              stateType: issue.state.type
+              stateType: issue.state.type,
+              labels: getLinearIssueDisplayLabels(issue)
             }
           : null
     )

@@ -3,6 +3,7 @@ import { getWorkspaceAttachments } from '../../../../shared/workspace-attachment
 import type { IssueInfo } from '../../../../shared/github/pull-request-types'
 import type { LinearIssue } from '../../../../shared/linear/issue-types'
 import { getWorktreeCardJiraIssueDisplay } from './worktree-card-jira-issue-display'
+import { getLinearIssueDisplayLabels } from './linear-issue-display-labels'
 import type { WorktreeCardIssueDisplay, WorktreeCardLinearIssueDisplay } from './WorktreeCardMeta'
 import {
   coerceWorktreeCardVisibleTitle,
@@ -73,11 +74,7 @@ export function useWorktreeCardLinkedDetails({
           url: linearIssue.url,
           stateName: linearIssue.state?.name,
           stateType: linearIssue.state?.type,
-          // Why: labels stays canonical; optimistic patches may not refresh labelDetails.
-          labels: linearIssue.labels.map((name) => ({
-            name,
-            color: linearIssue.labelDetails?.find((label) => label.name === name)?.color
-          }))
+          labels: getLinearIssueDisplayLabels(linearIssue)
         }
       : {
           identifier: worktree.linkedLinearIssue,
