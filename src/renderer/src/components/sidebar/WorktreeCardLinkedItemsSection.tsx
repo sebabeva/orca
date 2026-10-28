@@ -16,6 +16,7 @@ import {
 } from './WorktreeCardMetadataStatusBadges'
 import { WorkspaceAttachmentOrigins } from './WorkspaceAttachmentOrigins'
 import { WorktreeCardReferenceRow } from './WorktreeCardReferenceRow'
+import { getLinearIssueDisplayLabelKey } from './linear-issue-display-labels'
 import type { WorkspaceReferenceDetailsMap } from './workspace-reference-details'
 import { getWorkspaceLinkedItemRows } from './workspace-hover-attachments'
 import type {
@@ -151,9 +152,9 @@ export function WorktreeCardLinkedItemsSection({
                           {detail?.issueState ? (
                             <IssueStateBadge state={detail.issueState} />
                           ) : null}
-                          {linearLabels.map((linearLabel) => (
+                          {linearLabels.map((linearLabel, index) => (
                             <LinearLabelBadge
-                              key={linearLabel.id ?? linearLabel.name}
+                              key={getLinearIssueDisplayLabelKey(linearLabel, index)}
                               name={linearLabel.name}
                               color={linearLabel.color}
                             />

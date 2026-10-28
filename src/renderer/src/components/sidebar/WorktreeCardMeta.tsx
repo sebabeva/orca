@@ -17,6 +17,7 @@ import {
 import { DetailHeader, MetadataActionIcon } from './WorktreeCardMetadataControls'
 import { hasWorktreeCardDetails, WorktreeCardMetaBadges } from './WorktreeCardMetaBadges'
 import { LinearLabelBadge, LinearStateBadge } from './WorktreeCardMetadataStatusBadges'
+import { getLinearIssueDisplayLabelKey } from './linear-issue-display-labels'
 import { useWorktreeCardDetailsHoverControl } from './worktree-card-details-hover-state'
 import { WorktreeCardLinkedReviewActions } from './WorktreeCardReviewActions'
 import type {
@@ -288,9 +289,9 @@ export function WorktreeCardDetailsHover({
                             stateType={linearIssue.stateType}
                           />
                         )}
-                        {(linearIssue.labels ?? []).map((label) => (
+                        {(linearIssue.labels ?? []).map((label, index) => (
                           <LinearLabelBadge
-                            key={label.id ?? label.name}
+                            key={getLinearIssueDisplayLabelKey(label, index)}
                             name={label.name}
                             color={label.color}
                           />

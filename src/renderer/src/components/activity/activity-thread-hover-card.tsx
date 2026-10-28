@@ -13,6 +13,7 @@ import {
   WorktreeCardDetailSectionContent
 } from '../sidebar/WorktreeCardDetailSection'
 import { LinearLabelBadge, LinearStateBadge } from '../sidebar/WorktreeCardMetadataStatusBadges'
+import { getLinearIssueDisplayLabelKey } from '../sidebar/linear-issue-display-labels'
 import { WorktreeCardIssueDetailSection } from '../sidebar/WorktreeCardIssueDetailSection'
 import { WorktreeCardReviewDetailSection } from '../sidebar/WorktreeCardReviewDetailSection'
 import { WorktreeCardAutomationDetailSection } from '../sidebar/WorktreeCardAutomationDetailSection'
@@ -305,9 +306,9 @@ function ActivityThreadHoverCardContent({
                   {secondary.hoverLinearIssue.stateName && (
                     <LinearStateBadge stateName={secondary.hoverLinearIssue.stateName} />
                   )}
-                  {(secondary.hoverLinearIssue.labels ?? []).map((label) => (
+                  {(secondary.hoverLinearIssue.labels ?? []).map((label, index) => (
                     <LinearLabelBadge
-                      key={label.id ?? label.name}
+                      key={getLinearIssueDisplayLabelKey(label, index)}
                       name={label.name}
                       color={label.color}
                     />

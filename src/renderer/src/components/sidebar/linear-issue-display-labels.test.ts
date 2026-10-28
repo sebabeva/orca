@@ -19,4 +19,16 @@ describe('getLinearIssueDisplayLabels', () => {
       { name: 'Bug' }
     ])
   })
+
+  it('keeps label ids when an older runtime sends no label details', () => {
+    expect(
+      getLinearIssueDisplayLabels({
+        labels: ['Frontend', 'Frontend'],
+        labelIds: ['team-frontend', 'workspace-frontend']
+      })
+    ).toEqual([
+      { id: 'team-frontend', name: 'Frontend' },
+      { id: 'workspace-frontend', name: 'Frontend' }
+    ])
+  })
 })

@@ -9,6 +9,13 @@ export function getLinearIssueDisplayLabels(
   return issue.labels.map((name, index) => {
     const id = issue.labelIds[index]
     const detail = issue.labelDetails?.find((label) => label.id === id)
-    return detail?.name === name ? { id, name, color: detail.color } : { name }
+    return detail && detail.name !== name ? { name } : { id, name, color: detail?.color }
   })
+}
+
+export function getLinearIssueDisplayLabelKey(
+  label: LinearIssueDisplayLabel,
+  index: number
+): string {
+  return label.id ?? `${label.name}:${index}`
 }
