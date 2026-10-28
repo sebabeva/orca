@@ -306,7 +306,11 @@ function ActivityThreadHoverCardContent({
                     <LinearStateBadge stateName={secondary.hoverLinearIssue.stateName} />
                   )}
                   {(secondary.hoverLinearIssue.labels ?? []).map((label) => (
-                    <LinearLabelBadge key={label.name} name={label.name} color={label.color} />
+                    <LinearLabelBadge
+                      key={label.id ?? label.name}
+                      name={label.name}
+                      color={label.color}
+                    />
                   ))}
                 </div>
               )}

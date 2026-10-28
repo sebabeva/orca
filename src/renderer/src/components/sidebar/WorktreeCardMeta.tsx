@@ -290,7 +290,7 @@ export function WorktreeCardDetailsHover({
                         )}
                         {(linearIssue.labels ?? []).map((label) => (
                           <LinearLabelBadge
-                            key={label.name}
+                            key={label.id ?? label.name}
                             name={label.name}
                             color={label.color}
                           />

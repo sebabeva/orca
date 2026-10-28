@@ -1,13 +1,14 @@
 import type { LinearIssue } from '../../../../shared/linear/issue-types'
 
-export type LinearIssueDisplayLabel = { name: string; color?: string }
+export type LinearIssueDisplayLabel = { id?: string; name: string; color?: string }
 
-// Why: labels stays canonical; optimistic patches may not refresh labelDetails.
+// Why: same-named labels can differ, and optimistic edits may leave labelIds and labelDetails behind labels.
 export function getLinearIssueDisplayLabels(
-  issue: Pick<LinearIssue, 'labels' | 'labelDetails'>
+  issue: Pick<LinearIssue, 'labels' | 'labelIds' | 'labelDetails'>
 ): LinearIssueDisplayLabel[] {
-  return issue.labels.map((name) => ({
-    name,
-    color: issue.labelDetails?.find((label) => label.name === name)?.color
-  }))
+  return issue.labels.map((name, index) => {
+    const id = issue.labelIds[index]
+    const detail = issue.labelDetails?.find((label) => label.id === id)
+    return detail?.name === name ? { id, name, color: detail.color } : { name }
+  })
 }

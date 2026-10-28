@@ -153,7 +153,7 @@ export function WorktreeCardLinkedItemsSection({
                           ) : null}
                           {linearLabels.map((linearLabel) => (
                             <LinearLabelBadge
-                              key={linearLabel.name}
+                              key={linearLabel.id ?? linearLabel.name}
                               name={linearLabel.name}
                               color={linearLabel.color}
                             />
